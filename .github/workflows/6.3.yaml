@@ -1,0 +1,21 @@
+name:  "sengrep"
+on:
+  workflow_dispatch:
+jobs:
+  semgrep:
+    name:  "analyse semgrep"
+    runs-on:  ubuntu-latest
+    container:
+      image:  returntocorp/semgrep:1.1.0
+    steps:
+      - name:  "checkout source"
+        uses:   actions/checkout@v3
+      - name:  "execute semgrep"
+        run:  semgrep ci --sarif --output semgrep.sarif
+        env:
+          SEMGREP_RULES:  p/default 
+      - name:  "upload sarif file"
+        uses:  github/codeql-action/upload-sarif@v2
+        if:  always()
+        with:
+          sarif_file:  semgrep.sarif
