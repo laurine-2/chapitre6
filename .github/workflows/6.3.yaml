@@ -1,0 +1,19 @@
+name: "workflows"
+on:
+  push:
+
+jobs:
+  semgrep:
+    name: Semgrep
+    runs-on: ubuntu-lastest
+    container:
+      image: returntocorp/semgrep:1.1.0
+    if: (github.actor != 'dependabot[bot]')
+    steps:
+      - name: "Checkout source"
+        uses: actions/chechout@v3
+        
+      - name: "Execute semgrep"
+        run: semgrep ci
+        env: 
+          SEMGREP_RULES: p/default
