@@ -7,8 +7,7 @@ jobs:
     name: Semgrep
     runs-on: ubuntu-lastest
     container:
-      image: returntocorp/semgrep:1.1.0
-    if: (github.actor != 'dependabot[bot]')
+      image: returntocorp/semgrep:1.1.0   
     steps:
       - name: "Checkout source"
         uses: actions/chechout@v3
@@ -16,4 +15,4 @@ jobs:
       - name: "Execute semgrep"
         run: semgrep ci
         env: 
-          SEMGREP_RULES: p/default
+          SEMGREP_RULES: 
